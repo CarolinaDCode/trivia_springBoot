@@ -1,3 +1,3 @@
 # Trivia :computer:
-:pushpin: Lenguaje: Java
+:pushpin: Lenguaje: Java <br>
 :pushpin: Framework: springBoot
