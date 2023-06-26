@@ -2,6 +2,7 @@ package academy.atl.trivia;
 
 import academy.atl.trivia.entities.Categoria;
 import academy.atl.trivia.entities.Pregunta;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,107 +26,30 @@ public class TriviaController {
     }*/
 
     @GetMapping("/question/{categoria}")
-    public Pregunta getQuestion(@PathVariable String categoria){
-        Pregunta preg = new Pregunta();
-        if (categoria.equalsIgnoreCase("Deportes")) {
-            preg.setCategory("Deportes");
-            preg.setQuestion( categoria + ": Qué ingredintes se necesitan para hacer una michelada en México?");
-            preg.setAnswer(0);
-            preg.setExplanation("La michelada, originaria de México, nacida de la creatividad y el deseo de refrescar, se convirtió en una popular bebida que cautivó a los amantes de la cerveza con su combinación única de sabores y su espíritu festivo.");
-
-            String[] options = new String[3];
-            options[0] = "Cerveza, lima/limón, sal, chile en polvo, salsa tipo inglesa, picante";
-            options[1] = "Cerveza, lima/limón y limon";
-            options[2] = "Cerveza, sal, tabasco y lima/limón";
-            preg.setOptions(options);
-        }
-
-        if (categoria.equalsIgnoreCase("Historia")) {
-            preg.setCategory("Historia");
-            preg.setQuestion(categoria + ": Qué ingredintes se necesitan para hacer una michelada en México?");
-            preg.setAnswer(0);
-            preg.setExplanation("La michelada, originaria de México, nacida de la creatividad y el deseo de refrescar, se convirtió en una popular bebida que cautivó a los amantes de la cerveza con su combinación única de sabores y su espíritu festivo.");
-
-            String[] options = new String[3];
-            options[0] = "Cerveza, lima/limón, sal, chile en polvo, salsa tipo inglesa, picante";
-            options[1] = "Cerveza, lima/limón y limon";
-            options[2] = "Cerveza, sal, tabasco y lima/limón";
-            preg.setOptions(options);
-        }
-
-        if (categoria.equalsIgnoreCase("Cine")) {
-            preg.setCategory("Cine");
-            preg.setQuestion(categoria + ": Qué ingredintes se necesitan para hacer una michelada en México?");
-            preg.setAnswer(0);
-            preg.setExplanation("La michelada, originaria de México, nacida de la creatividad y el deseo de refrescar, se convirtió en una popular bebida que cautivó a los amantes de la cerveza con su combinación única de sabores y su espíritu festivo.");
-
-            String[] options = new String[3];
-            options[0] = "Cerveza, lima/limón, sal, chile en polvo, salsa tipo inglesa, picante";
-            options[1] = "Cerveza, lima/limón y limon";
-            options[2] = "Cerveza, sal, tabasco y lima/limón";
-            preg.setOptions(options);
-        }
-
-        if (categoria.equalsIgnoreCase("Historia")) {
-            preg.setCategory("Historia");
-            preg.setQuestion(categoria + ": Qué ingredintes se necesitan para hacer una michelada en México?");
-            preg.setAnswer(0);
-            preg.setExplanation("La michelada, originaria de México, nacida de la creatividad y el deseo de refrescar, se convirtió en una popular bebida que cautivó a los amantes de la cerveza con su combinación única de sabores y su espíritu festivo.");
-
-            String[] options = new String[3];
-            options[0] = "Cerveza, lima/limón, sal, chile en polvo, salsa tipo inglesa, picante";
-            options[1] = "Cerveza, lima/limón y limon";
-            options[2] = "Cerveza, sal, tabasco y lima/limón";
-            preg.setOptions(options);
-        }
-
-        if (categoria.equalsIgnoreCase("Ciencia")) {
-            preg.setCategory("Ciencia");
-            preg.setQuestion(categoria + ": Qué ingredintes se necesitan para hacer una michelada en México?");
-            preg.setAnswer(0);
-            preg.setExplanation(categoria + "La michelada, originaria de México, nacida de la creatividad y el deseo de refrescar, se convirtió en una popular bebida que cautivó a los amantes de la cerveza con su combinación única de sabores y su espíritu festivo.");
-
-            String[] options = new String[3];
-            options[0] = "Cerveza, lima/limón, sal, chile en polvo, salsa tipo inglesa, picante";
-            options[1] = "Cerveza, lima/limón y limon";
-            options[2] = "Cerveza, sal, tabasco y lima/limón";
-            preg.setOptions(options);
-        }
-
-        if (categoria.equalsIgnoreCase("Arte")) {
-            preg.setCategory("Arte");
-            preg.setQuestion(categoria + ": Qué ingredintes se necesitan para hacer una michelada en México?");
-            preg.setAnswer(0);
-            preg.setExplanation(categoria + "La michelada, originaria de México, nacida de la creatividad y el deseo de refrescar, se convirtió en una popular bebida que cautivó a los amantes de la cerveza con su combinación única de sabores y su espíritu festivo.");
-
-            String[] options = new String[3];
-            options[0] = "Cerveza, lima/limón, sal, chile en polvo, salsa tipo inglesa, picante";
-            options[1] = "Cerveza, lima/limón y limon";
-            options[2] = "Cerveza, sal, tabasco y lima/limón";
-            preg.setOptions(options);
-        }
-
-        if (categoria.equalsIgnoreCase("Cultura")) {
-            preg.setCategory("Cultura");
-            preg.setQuestion(categoria + ": Qué ingredintes se necesitan para hacer una michelada en México?");
-            preg.setAnswer(0);
-            preg.setExplanation("La michelada, originaria de México, nacida de la creatividad y el deseo de refrescar, se convirtió en una popular bebida que cautivó a los amantes de la cerveza con su combinación única de sabores y su espíritu festivo.");
-
-            String[] options = new String[3];
-            options[0] = "Cerveza, lima/limón, sal, chile en polvo, salsa tipo inglesa, picante";
-            options[1] = "Cerveza, lima/limón y limon";
-            options[2] = "Cerveza, sal, tabasco y lima/limón";
-            preg.setOptions(options);
-
-        }
+    public String getQuestion(@PathVariable String categoria){
+        ChatGptClient chatGpt = new ChatGptClient();
+        String respuestaJson = chatGpt.enviarPregunta("Estoy armando una trivia, necesito que me des una pregunta de " + categoria + " con la siguiente estructura de JSON. La respuesta correcta de la pregunta no siempre tiene que ser la primera, debe de variar.\n" +
+                "\n" +
+                "{\n" +
+                "    \"category\": \"aca va el nombre de la categoria\",\n" +
+                "    \"question\": \"aca va la pregunta\",\n" +
+                "    \"options\":[\n" +
+                "\t       \"aca va la opcion 1\",\n" +
+                "\t       \"aca va la opcion 2\",\n" +
+                "\t       \"aca va la opcion 3\",\n" +
+                "    ],\n" +
+                "    \"answer\": \"Aquí va la respuesta correcta en caso de ser la tercera es el numero 2 ó en caso de ser la segunda es el 1 ó  en caso de ser la primera es el 0\",\n" +
+                "    \"explanation\": \"Aca tienes que poner una explicación dciendo porque es la respuesta correcta\"\n" +
+                "}");
+        return respuestaJson;
         /**
-         *List<String> options = new ArrayList();
-         *options.add("Cerveza, lima/limón, sal, chile en polvo, salsa tipo inglesa, picante");
-         *options.add("Cerveza, lima/limón y limon");
-         *options.add("Cerveza, sal, tabasco y lima/limón");
-         *preg.setOptions(options);
+         * Convertirá la rpta que devuelva chat gpt al objeto Pregunto,(tomará la estructura que tiene definida nuestra clase Pregunta).
          */
-        return preg;
+        /**
+         * ObjectMapper convertidor = new ObjectMapper();
+         * Pregunta preg = convertidor.convertValue(respuestaJson, Pregunta.class);
+         * return preg;
+         */
     }
     @GetMapping("/categories")
     public Categoria[] getCategories(){

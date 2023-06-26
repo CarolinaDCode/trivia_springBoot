@@ -7,6 +7,14 @@ public class Pregunta {
     private Integer answer;
     private String explanation;
 
+    public Pregunta(String category, String question, String[] options, Integer answer, String explanation) {
+        this.category = category;
+        this.question = question;
+        this.options = options;
+        this.answer = answer;
+        this.explanation = explanation;
+    }
+
     public String getCategory() {
         return category;
     }
