@@ -1,13 +1,13 @@
 package academy.atl.trivia.entities;
 
 public class Pregunta {
-    private String category;
+    private Category category;
     private String question;
     private String[] options;
     private Integer answer;
     private String explanation;
 
-    public Pregunta(String category, String question, String[] options, Integer answer, String explanation) {
+    public Pregunta(Category category, String question, String[] options, Integer answer, String explanation) {
         this.category = category;
         this.question = question;
         this.options = options;
@@ -15,7 +15,7 @@ public class Pregunta {
         this.explanation = explanation;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
@@ -35,7 +35,7 @@ public class Pregunta {
         return explanation;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
