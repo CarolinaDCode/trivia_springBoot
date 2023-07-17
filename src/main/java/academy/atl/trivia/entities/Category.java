@@ -1,23 +1,24 @@
 package academy.atl.trivia.entities;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-public class Categoria {
+@Entity
+@Table(name = "category")
+@Data
+public class Category {
 
+    @Id //Para que sepa que este atributo es como la pk
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Funciona como el autoincrement pero en java
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
     private String description;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
